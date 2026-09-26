@@ -1,11 +1,13 @@
 ---
 name: find-skill
-description: Use when the user wants to find or discover a Claude Code skill that is NOT already installed — e.g. "is there a skill for X", "find me a skill that…", "what skills exist for…", or "/find-skill <topic>". Searches the official plugin marketplace, GitHub, and curated awesome-lists for community skills matching a need, removes anything already installed, and recommends the top 5 with links. Do NOT use this to create or edit skills (that is skill authoring), or to pick among skills you already have.
+description: Use when the user wants to find or discover a Claude Code skill that is NOT already installed — e.g. "is there a skill for X", "find me a skill that…", "what skills exist for…", or "/find-skill <topic>" — including Portuguese requests like "existe skill para…", "encontre uma skill de…", "procure skill que…". Searches the official plugin marketplace, GitHub, and curated awesome-lists for community skills matching a need, removes anything already installed, and recommends the top 5 with links. Do NOT use this to create or edit skills (that is skill authoring), or to pick among skills you already have.
 ---
 
 # Find a Skill
 
 Discover Claude Code skills that are **not yet installed** and recommend the best matches for a stated need. This is **discover-and-recommend only** — never install, download, clone, or modify the user's system. End by showing a ranked shortlist with links; the user installs manually.
+
+**Language: always answer in Brazilian Portuguese (PT-BR)** — explanations, labels, "Por quê", footers and edge-case messages. Keep skill/repo names, commands, URLs and install ids exactly as they are (don't translate them). Numbers in BR format (1.234 instalações).
 
 ## Speed rules (read first)
 
@@ -21,7 +23,7 @@ This skill is slow when done serially. Always:
 
 ### 1. Turn the request into keywords
 
-Extract 2–4 search keywords from the user's need (the topic, the verb, key nouns). If the request is too vague to search (e.g. "find me a useful skill"), ask one clarifying question first.
+Extract 2–4 search keywords from the user's need (the topic, the verb, key nouns). Most skills are written in English: for a Portuguese request, search with the **English terms plus the Portuguese/Brazilian terms** in the same regex (e.g. folha de pagamento → `payroll|folha|inss|fgts|irrf|esocial|brazil`). If the request is too vague to search (e.g. "find me a useful skill"), ask one clarifying question first.
 
 ### 2. Preflight — installed skills, tools, marketplace (ONE Bash call)
 
@@ -93,15 +95,17 @@ Skip the WebSearch: WebFetch `https://github.com/hesreallyhim/awesome-claude-cod
 One block per candidate:
 
 ```
-**<name>** — <one-line description>
-  Source: GitHub | Marketplace | List   ·   <★ stars (GitHub) | N installs (Marketplace)> · pushed <YYYY-MM>
-  Link: <repo url / marketplace id>
-  Why: <one line: how it fits the stated need>
-  Get it: <copy-paste hint — `/plugin install …` or `git clone …`>  (not run for you)
+**<nome>** — <descrição de uma linha, em português>
+  Fonte: GitHub | Marketplace | Lista curada   ·   <★ estrelas (GitHub) | N instalações (Marketplace)> · último push <AAAA-MM>
+  Link: <url do repo / id no marketplace>
+  Por quê: <uma linha: como atende à necessidade>
+  Como obter: <comando para copiar — `/plugin install …` ou `git clone …`>  (não executado por mim)
 ```
 
-If a source was skipped or degraded, add a one-line footer, e.g.
-`> GitHub searched via WebSearch — run \`gh auth login\` for sharper, code-level results.`
+If a source was skipped or degraded, add a one-line footer in Portuguese, e.g.
+`> GitHub pesquisado via WebSearch — rode \`gh auth login\` para resultados mais precisos.`
+
+For regulated domains (Brazilian payroll, tax, labor law), add one line warning that tables/rates inside a third-party skill must be checked against the current official source before use.
 
 ## Edge cases
 
